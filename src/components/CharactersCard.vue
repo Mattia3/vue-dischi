@@ -21,8 +21,8 @@ export default {
     poster: String,
     title: String,
     author: String,
-    year: String
-
+    year: String,
+    genre: String,
   },
 }
 </script>

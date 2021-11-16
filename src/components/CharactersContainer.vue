@@ -1,16 +1,20 @@
 <template>
   <div>
     <div class="background-header"></div>
-    <div class="container-background">
+    <div class="container-background text-center">
+       <Select :arrayGeneri="arrayGeneri" @badgeClick="filterGenere"></Select>
+       
       <div class="container">
         <div class="row row-cols-md-5 g-4  py-5">
-          <div class="col" v-for="(character, i) in characterList" :key="i">
+          <div class="col" v-for="(character, i) in filterGenere()" :key="i">
             <CharactersCard 
               :poster="character.poster"
               :title="character.title"
               :author="character.author"
               :year="character.year"
+              :genre="character.genre"
             ></CharactersCard>
+           
           </div>
         </div>
       </div>
@@ -20,27 +24,55 @@
 
 <script>
 import axios from "axios";
+
 import CharactersCard from "./CharactersCard.vue"
+import Select from "./Select.vue"
 
 export default {
   name: "CharactersContainer",
   components:{
     CharactersCard,
+    Select,
   },
   data(){
     return{
       characterList: [],
+      arrayGeneri: "",
+      arrayPushGeneri: []
     }
   },
   mounted(){
     axios.get("https://flynn.boolean.careers/exercises/api/array/music")
     .then(resp => {
       this.characterList.push(...resp.data.response)
-     
+    }),
+     axios.get("https://flynn.boolean.careers/exercises/api/array/music")
+    .then(resp => {
+    let arr = "";
+      arr=(resp.data.response.map(function (el) {return el.genre}))
+      this.arrayGeneri=[...new Set(arr)]
     })
+  },
+
+  methods:{
+    filterGenere(genereSelezionato){
+      console.log(genereSelezionato)
+      if(!genereSelezionato){
+        return this.characterList
+      }
+      
+      return this.characterList.filter((albulm) => {
+        return albulm.genre === genereSelezionato
+        
+      })
+    }
+   
   }
 
-}
+  }
+  
+
+
 
 </script>
 
