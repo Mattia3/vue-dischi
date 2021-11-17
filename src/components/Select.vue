@@ -6,7 +6,6 @@
 </template>
 
 <script>
-
 export default {
   name: "Select",
   data(){
@@ -27,5 +26,4 @@ export default {
   border-color: brown;
   color: white;
 }
-
 </style>

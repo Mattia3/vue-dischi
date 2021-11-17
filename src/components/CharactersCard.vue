@@ -37,16 +37,11 @@ export default {
   .my-img{
     padding: 20px;
   }
-
   .my-card-body{
     padding: 0 11px;
   }
-
   .subtitle-container{
     text-align: center;
     padding: 10px 0px;
   }
-
-
-
 </style>

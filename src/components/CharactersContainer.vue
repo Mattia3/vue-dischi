@@ -2,11 +2,11 @@
   <div>
     <div class="background-header"></div>
     <div class="container-background text-center">
-       <Select :arrayGeneri="arrayGeneri" @badgeClick="filterGenere"></Select>
+       <Select :arrayGeneri="arrayGeneri" @badgeClick="filterGenere" ></Select>
        
       <div class="container">
         <div class="row row-cols-md-5 g-4  py-5">
-          <div class="col" v-for="(character, i) in filterGenere()" :key="i">
+          <div class="col" v-for="(character, i) in funzione" :key="i">
             <CharactersCard 
               :poster="character.poster"
               :title="character.title"
@@ -38,7 +38,7 @@ export default {
     return{
       characterList: [],
       arrayGeneri: "",
-      arrayPushGeneri: []
+      variabileFiltro: "",
     }
   },
   mounted(){
@@ -53,27 +53,26 @@ export default {
       this.arrayGeneri=[...new Set(arr)]
     })
   },
-
   methods:{
     filterGenere(genereSelezionato){
+      this.variabileFiltro = genereSelezionato
       console.log(genereSelezionato)
-      if(!genereSelezionato){
+     
+    },
+  },
+
+  computed: {
+    funzione(){
+       if(!this.variabileFiltro){
         return this.characterList
       }
-      
-      return this.characterList.filter((albulm) => {
-        return albulm.genre === genereSelezionato
-        
+        return this.characterList.filter((albulm) => {
+        return albulm.genre === this.variabileFiltro
       })
     }
-   
   }
-
-  }
+}
   
-
-
-
 </script>
 
 <style  lang="scss">
@@ -81,11 +80,9 @@ export default {
   background-color: rgba(43,58,70,255);
   height: 70px;
   }
-
   .container-background{
     background-color: rgba(25,45,59,255);
+    height: 100vh;
   }
-
   
-
 </style>
